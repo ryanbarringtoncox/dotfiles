@@ -5,8 +5,8 @@ set encoding=utf8
 set ignorecase smartcase " if search pattern has uppercase char, search is case sensitive
 
 " buffer mappings - use ctrl h/l to cycle left/right thru open buffers
-map <C-l> :bn!<CR>
-map <C-h> :bp!<CR>
+noremap <C-l> :bn!<CR>
+noremap <C-h> :bp!<CR>
 
 " Disable file type for vundle
 filetype off                  " required
@@ -20,8 +20,8 @@ Plugin 'gmarik/Vundle.vim'
 
 " Plugins
 Plugin 'scrooloose/nerdtree'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'DavidEGx/ctrlp-smarttabs'
+" Plugin 'ctrlpvim/ctrlp.vim'
+" Plugin 'DavidEGx/ctrlp-smarttabs'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'Townk/vim-autoclose'
 Plugin 'vim-syntastic/syntastic'
@@ -33,6 +33,8 @@ Plugin 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'isRuslan/vim-es6'
+Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plugin 'junegunn/fzf.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -61,22 +63,6 @@ let g:airline_theme='hybrid'
 let g:hybrid_custom_term_colors = 1
 let g:hybrid_reduced_contrast = 1
 
-" ctrlp config from https://coderwall.com/p/xhl3aq/my-ctrlp-configuration
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-let g:ctrlp_working_path_mode='ra'
-let g:ctrlp_cmd = 'CtrlPMixed'
-let g:ctrlp_max_files=0
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
-set autochdir
-
-" 1r - open the first file in the current window, and remaining opened as hidden buffers.
-" find files using ctrlp then select with ctrlz then ctrlo opens them
-let g:ctrlp_open_multiple_files = '1r'
-
-" for ctrl-p smart tabs from : https://github.com/DavidEGx/ctrlp-smarttabs
-let g:ctrlp_extensions = ['smarttabs']
-
 " Persistent undo
 set undofile
 set undodir=$HOME/.vim/undo
@@ -92,6 +78,58 @@ highlight CursorLine guibg=#303000 ctermbg=234
 " should allow you to undo after saving, changing buffers and changing back
 :set hidden
 
-" make MRU CtrlP defaut mode
-let g:ctrlp_map='<c-p>'
-let g:ctrlp_cmd = 'CtrlPMRU'
+" let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+set autochdir
+
+" " Show file options above the command line
+set wildmenu
+
+" map fzf to ctrl-f
+noremap <C-p> :GFiles<CR>
+
+" set leader to be ;
+let mapleader = ";"
+
+" map space bar to history
+noremap <leader><space> :History<ENTER>
+" move line down by pressing -
+noremap <leader>- ddp
+" move line up by pressing -
+noremap <leader>_ ddkP
+" use <c-d> to delete lines in insert mode
+inoremap <c-d> <esc>ddi
+" make <c-u> uppercase a word in imode or nmode
+inoremap <c-u> <esc>veU
+nnoremap <c-u> veU
+" move up and down 5 lines at a time with ctl
+nnoremap <c-j> 7j
+inoremap <c-j> <esc>7ji
+nnoremap <c-k> 7k
+inoremap <c-k> <esc>7ki
+" edit and source vimrc on the fly
+:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+:nnoremap <leader>sv :source $MYVIMRC<cr>
+" type console.log("") in normal and insert modes
+:inoremap <leader>cl console.log("")<esc>hha
+:nnoremap <leader>cl iconsole.log("")<esc>hha
+" type print("") in normal and insert modes
+:inoremap <leader>pp print("")<esc>hha
+:nnoremap <leader>pp iprint("")<esc>hha
+" map jk to <esc> key and (temporarily) disable escape to learn it
+:inoremap jk <esc>
+" this isn't working - was intended to force me to jk above 
+" :inoremap <esc> <nop>
+" close buffers more easily - causes issues when i do back then dw
+" :nnoremap bd :bd<cr>
+
+set number
+
+:nnoremap <leader>sp :set paste<cr>
+:nnoremap <leader>snp :set nopaste<cr>
+
+" haven't got local leader and comment shortcut below working yet
+" set local leader to be ,
+" let maplocalleader = "\\"
+" comment out lines based on filetype from anywhere within line
+" :autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
+" :autocmd FileType python nnoremap <buffer> <localleader>c I#<esc>
