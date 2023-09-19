@@ -24,3 +24,7 @@ alias ga='git add'
 alias gc='git commit'
 alias gcm='git commit -m'
 ```
+
+## Configuring Git For Another Laptop (note to self)
+
+Set up SSH keys as per github's instructions and _**Remember to clone/configure local git repo as SSH not https - this has tripped me up before!**_
