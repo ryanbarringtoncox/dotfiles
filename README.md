@@ -23,6 +23,10 @@ alias gl='git log'
 alias ga='git add'
 alias gc='git commit'
 alias gcm='git commit -m'
+
+# recusrive history search
+bindkey -v
+bindkey '^R' history-incremental-search-backward
 ```
 
 ## Configuring Git For Another Laptop (note to self)
