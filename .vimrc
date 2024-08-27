@@ -67,6 +67,9 @@ nnoremap <c-j> 7j
 inoremap <c-j> <esc>7ji
 nnoremap <c-k> 7k
 inoremap <c-k> <esc>7ki
+" move up and down 5 lines at a time in visual mode
+vnoremap <c-j> 7j
+vnoremap <c-k> 7k
 " edit and source vimrc on the fly
 :nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 :nnoremap <leader>sv :source $MYVIMRC<cr>
